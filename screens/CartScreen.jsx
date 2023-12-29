@@ -1,12 +1,48 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { ChevronLeftIcon } from 'react-native-heroicons/solid'
+import { useNavigation } from '@react-navigation/native';
+import FruitCardCart from '../components/FruitCardCart';
+import { cartItems } from '../constants';
 
-const CartScreen = () => {
+
+export default function CartScreen(props) {
+    const navigation = useNavigation();
     return (
-        <View>
-            <Text>CartScreen</Text>
-        </View>
+        <SafeAreaView className="flex-1 flex justify-between bg-orange-50">
+            <View className="flex-row justify-start mx-5">
+                <TouchableOpacity onPress={() => navigation.goBack()} className="border border-gray-300 rounded-xl">
+                    <ChevronLeftIcon size="30" color="gray" />
+                </TouchableOpacity>
+            </View>
+            <View className="cart mx-5 flex-1">
+                <Text className="text-foreground text-2xl py-10">Your <Text className="font-bold">cart</Text></Text>
+                <View>
+                    {
+                        cartItems.map((item, index) => <FruitCardCart fruit={item} key={index} />)
+                    }
+                </View>
+                <View className="flex-row justify-end py-4">
+                    <Text className="text-lg">Total price: <Text className="font-bold text-yellow-500">240.70</Text></Text>
+                </View>
+            </View>
+            <View className="flex-row justify-between items-center mx-7">
+                <TouchableOpacity
+                    style={{
+                        backgroundColor: 'orange',
+                        opacity: 0.8,
+                        shadowColor: 'orange',
+                        shadowRadius: 25,
+                        shadowOffset: { width: 0, height: 15 },
+                        shadowOpacity: 0.4,
+                    }} className="p-3 flex-1 rounded-xl">
+                    <Text className="text-xl text-center text-white font-bold">Payment</Text>
+                </TouchableOpacity>
+            </View>
+
+
+        </SafeAreaView>
+
     )
 }
-
-export default CartScreen
